@@ -1,16 +1,16 @@
-﻿/* 
+﻿/*
  * Filename: BirdCount.cs
  * Description: A skeleton class for a C# practical exercise covering basic programming tasks
- * such as declaring variables, methods, returning data from methods. 
- * 
+ * such as declaring variables, methods, returning data from methods.
+ *
  * Excercise adapted from https://github.com/exercism/csharp/tree/main/exercises/concept/bird-watcher
  */
 
 /*
 * Instructions:
-* You're an avid bird watcher that keeps track of how many birds have visited your garden 
-* in the last seven days. You have six tasks, all dealing with the numbers of birds that 
-* visited your garden. 
+* You're an avid bird watcher that keeps track of how many birds have visited your garden
+* in the last seven days. You have six tasks, all dealing with the numbers of birds that
+* visited your garden.
 */
 
 
@@ -27,39 +27,42 @@ public class BirdCount
     }
 
     /// <summary>
-    /// The <c>LastWeek</c> method returns an array containing last weeks count which was 
+    /// The <c>LastWeek</c> method returns an array containing last weeks count which was
     /// [0, 2, 5, 3, 7, 8, 4].
     /// </summary>
     /// <returns>An array of seven integers.</returns>
     /// <exception cref="NotImplementedException"></exception>
     public static int[] LastWeek()
     {
-        // TODO: Implement the 'LastWeek()' method
-        throw new NotImplementedException("Please implement the (static) BirdCount.LastWeek() method");
+        BirdCount birdCountInstance = new BirdCount([0, 2, 5, 3, 7, 8, 4]);
+        int[] birdCount = birdCountInstance._birdsPerDay;
+
+        if (birdCount.Length < 7) throw new ArgumentException("Bird count array is too short");
+
+        int[] lastWeek = birdCount[(birdCount.Length - 7)..birdCount.Length];
+        return lastWeek;
     }
 
     /// <summary>
-    /// The <c>Today</c> method returns the number of birds that visited today. The counts are 
-    /// ordered by day, with the first element being the count of the oldest day, and the 
+    /// The <c>Today</c> method returns the number of birds that visited today. The counts are
+    /// ordered by day, with the first element being the count of the oldest day, and the
     /// last element being today's count.
     /// </summary>
     /// <returns>An integer representing the number of birds that visisted today.</returns>
     /// <exception cref="NotImplementedException"></exception>
     public int Today()
     {
-        // TODO: Implement the 'Today()' method
-        throw new NotImplementedException("Please implement the BirdCount.Today() method");
+        return _birdsPerDay[_birdsPerDay.Length - 1];
     }
 
     /// <summary>
-    /// The <c>IncrementTodaysCount</c> method increments the current count for the number of 
+    /// The <c>IncrementTodaysCount</c> method increments the current count for the number of
     /// birds that visited today by 1.
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
     public void IncrementTodaysCount()
     {
-        // TODO: Implement the 'IncrementTodaysCount()' method
-        throw new NotImplementedException("Please implement the BirdCount.IncrementTodaysCount() method");
+        _birdsPerDay[_birdsPerDay.Length - 1]++;
     }
 
     /// <summary>
@@ -70,12 +73,15 @@ public class BirdCount
     /// <exception cref="NotImplementedException"></exception>
     public bool HasDayWithoutBirds()
     {
-        // TODO: Implement the 'HasDayWithoutBirds()' method
-        throw new NotImplementedException("Please implement the BirdCount.HasDayWithoutBirds() method");
+        foreach(int visitCount in _birdsPerDay)
+        {
+            if (visitCount == 0) return true;
+        }
+        return false;
     }
 
     /// <summary>
-    /// The <c>CountForFirstDays</c> method returns the number of birds that have visited your 
+    /// The <c>CountForFirstDays</c> method returns the number of birds that have visited your
     /// garden from the start of the week, but limit the count to the specified number of days
     /// from the start of the week.
     /// </summary>
