@@ -91,9 +91,12 @@ public class BirdCount
     /// <exception cref="NotImplementedException"></exception>
     public int CountForFirstDays(int numberOfDays)
     {
-        // TODO: Implement the 'CountForFirstDays()' method
-        throw new NotImplementedException("Please implement the BirdCount.CountForFirstDays() method");
-
+        int birdCount = 0;
+        for (int i = 0; i < numberOfDays; i++)
+        {
+            birdCount += _birdsPerDay[i];
+        }
+        return birdCount;
     }
     /// <summary>
     /// The <c>BusyDays</c> method counts the number of days over the last week where more
@@ -104,8 +107,12 @@ public class BirdCount
     /// <exception cref="NotImplementedException"></exception>
     public int BusyDays()
     {
-        // TODO: Implement the 'BusyDays()' method
-        throw new NotImplementedException("Please implement the BirdCount.BusyDays() method");
+        int daysCount = 0;
+        foreach(int visitCount in _birdsPerDay)
+        {
+            if(visitCount >= 5) daysCount++;
+        }
+        return daysCount;
     }
 
 }
