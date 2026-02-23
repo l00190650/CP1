@@ -1,8 +1,8 @@
-﻿/* 
+﻿/*
  * Filename: Lasagna.cs
  * Description: A skeleton class for a C# practical exercise covering basic programming tasks
- * such as declaring variables, methods, returning data from methods. 
- * 
+ * such as declaring variables, methods, returning data from methods.
+ *
  * Excercise adapted from https://github.com/exercism/csharp/tree/main/exercises/concept/lucians-luscious-lasagna
  */
 
@@ -11,17 +11,18 @@ namespace LuciansLusciousLasagna
 {
     public class Lasagna
     {
+        private const int expectedMinutesInOven = 40;
+
         /// <summary>
-        /// The <c>ExpectedMinutesInOven</c> method retuns how many minutes the lasagna should be in the 
-        /// oven. According to the cookbook, the expected oven time is forty minutes. 
+        /// The <c>ExpectedMinutesInOven</c> method retuns how many minutes the lasagna should be in the
+        /// oven. According to the cookbook, the expected oven time is forty minutes.
         /// </summary>
         /// <returns>The expected time in the oven according to the recipe.</returns>
         public int ExpectedMinutesInOven()
         {
-            // TODO: Implement the 'ExpectedMinutesInOven()' method
-            throw new NotImplementedException("Please implement the ExpectedMinutesInOven() method");
-
+            return  expectedMinutesInOven;
         }
+
         /// <summary>
         /// The RemainingMinutesInOven method that takes the actual minutes the lasagna has been in
         /// the oven as a parameter and returns how many minutes the lasagna still has to remain in
@@ -33,10 +34,7 @@ namespace LuciansLusciousLasagna
         /// in the oven.</returns>
         public int RemainingMinutesInOven(int durationInOven)
         {
-            // TODO: Implement the 'RemainingMinutesInOven()' method
-            throw new NotImplementedException("Please implement the RemainingMinutesInOven() method");
-
-
+            return expectedMinutesInOven - durationInOven;
         }
 
         /// <summary>
@@ -49,8 +47,7 @@ namespace LuciansLusciousLasagna
         public int PreparationTimeInMinutes(int layers)
         {
             // TODO: implement the 'PreparationTimeInMinutes()' method
-            throw new NotImplementedException("Please implement the PreparationTimeInMinutes() method");
-
+            return layers * 2;
         }
 
         /// <summary>
@@ -66,8 +63,9 @@ namespace LuciansLusciousLasagna
         /// lasagna so far.</returns>
         public int ElapsedTimeInMinutes(int layers, int minutesInOven)
         {
-            // TODO: implement the 'ElapsedTimeInMinutes()' method
-            throw new NotImplementedException("Please implement the ElapsedTimeInMinutes() method");
+            int prepMinutes = PreparationTimeInMinutes(layers);
+            int remainingMinutes = minutesInOven + prepMinutes;
+            return remainingMinutes;
         }
     }
 }
