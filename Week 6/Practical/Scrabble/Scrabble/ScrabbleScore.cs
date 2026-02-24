@@ -59,11 +59,11 @@ namespace Scrabble
         public static int Score(string input)
         {
             int score = 0;
+            input = input.ToUpper();
+            input = input.Replace(" ", "");
             if (
-                input == null ||
                 input == ""
             ) return score; //throw new ArgumentNullException(nameof(input), "Input cannot be null or empty.");
-            input = input.ToUpper();
             char[] inputChars = input.ToCharArray();
 
             foreach(char chara in inputChars)
