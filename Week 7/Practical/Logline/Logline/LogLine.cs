@@ -5,13 +5,13 @@
 namespace Logline
 {
     /// <summary>
-    /// The LogLine class provides starter code for the Week 6 practical exercise for commerical 
-    /// programming 1. The solution contains a second project called LogLineTests which includes 
+    /// The LogLine class provides starter code for the Week 6 practical exercise for commerical
+    /// programming 1. The solution contains a second project called LogLineTests which includes
     /// unit test to test if your code works as required. You can run the tests by:
     /// 1. Build the solution (ensure both the Logline and LogLineTests projects build.
     /// 2. Display the test explorer window by clicking View->Test Explorer.
     /// 3. Click on the "run all tests" button (green arrow) to run each unit test.
-    /// 
+    ///
     /// A green tick means your code passed the test. A Red X means it failed the test.
     /// You can examine the expected and actual output of each test. You can also put a breakpoint
     /// in tests and run them through the debugger. Right click on a test and select "debug" to run
@@ -19,17 +19,78 @@ namespace Logline
     /// </summary>
     public class LogLine
     {
+        private static string[] escapeSequences =
+        {
+            "\\\\",
+            "\\'",
+            "\\\"",
+            "\\0",
+            "\\a",
+            "\\b",
+            "\\f",
+            "\\n",
+            "\\r",
+            "\\t",
+            "\\v",
+            "\\xHH",
+            "\\uHHHH",
+            "\\UHHHHHHHH"
+        };
+
+        private static char[] errorCharacters =
+        {
+            '[',
+            ']',
+            ':',
+        };
+
         /// <summary>
-        /// The Message method should return a log line's message. 
+        /// The Message method should return a log line's message.
         /// Example input: "[ERROR]: Invaid operation"
         /// Example output: "Invald operation"
         /// </summary>
         /// <param name="logLine">The log message</param>
         /// <returns>A string containing just the message element of the log</returns>
+
+        private static string GetErrorMessage(string logLine)
+        {
+            int errorMessageStringIndex = logLine.IndexOf(": ");
+            string errorMessageString = logLine.Substring(errorMessageStringIndex + 2);
+            errorMessageString = errorMessageString.Trim();
+
+            foreach (string seq in escapeSequences)
+            {
+                int escapedIndex = errorMessageString.IndexOf(seq);
+                if (escapedIndex != -1)
+                {
+                    errorMessageString = errorMessageString.Substring(0, escapedIndex);
+                }
+            }
+
+            return errorMessageString;
+        }
+
+        private static string GetErrorType(string logLine)
+        {
+            int errorTypeStringIndex = logLine.IndexOf(":");
+            string errorTypeString = logLine.Substring(0, errorTypeStringIndex);
+
+            foreach (char chara in errorCharacters)
+            {
+                int characterIndex = errorTypeString.IndexOf(chara);
+                if (characterIndex != -1)
+                {
+                    errorTypeString = errorTypeString.Replace(chara, ' ');
+                }
+            }
+
+            errorTypeString = errorTypeString.Trim();
+            return errorTypeString;
+        }
+
         public static string Message(string logLine)
         {
-            // TODO - Implement the function
-            throw new NotImplementedException("Implement the Message function to return just the message string");
+            return GetErrorMessage(logLine);
         }
 
         /// <summary>
@@ -41,12 +102,11 @@ namespace Logline
         /// <returns>A lowercase string containing the log level</returns>
         public static string LogLevel(string logLine)
         {
-            /// TODO - Implement the function
-            throw new NotImplementedException("Implement the LogLevel method to return the Log level");
+            return GetErrorType(logLine).ToLower();
         }
 
         /// <summary>
-        /// The Reformat method should reformat the log line, putting the message first and the 
+        /// The Reformat method should reformat the log line, putting the message first and the
         /// log level after it in parentheses. The log level should be lowercase.
         /// Example input: "[INFO]: operation completed"
         /// Example output: "Operation completed (info)"
@@ -55,8 +115,9 @@ namespace Logline
         /// <returns></returns>
         public static string Reformat(string logLine)
         {
-            /// TODO - Implement the function
-            throw new NotImplementedException("Implement the Reformat method to return the message then log level");
+            string errorMessage = GetErrorMessage(logLine);
+            string errorType = GetErrorType(logLine);
+            return $"{errorMessage} ({errorType.ToLower()})";
         }
     }
 }
